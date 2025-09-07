@@ -22,12 +22,11 @@ export default function () {
             const response = await axios.post("/api/users/signup",user)
             console.log("Signup Succesfully : ",response.data)
             router.push("/login")
-            setLoading(false)
         } catch (error:any) {
             console.log("Sign Up failed : ",error.message)
             toast.error(error.message)
         }finally{
-
+            setLoading(false)
         }
     }
 
