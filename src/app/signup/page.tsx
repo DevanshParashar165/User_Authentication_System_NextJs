@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function () {
     const router = useRouter()
@@ -13,9 +14,21 @@ export default function () {
     })
 
     const [buttonDisabled,setButtonDisabled] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     const onSignUp = async () => {
+        try {
+            setLoading(true)
+            const response = await axios.post("/api/users/signup",user)
+            console.log("Signup Succesfully : ",response.data)
+            router.push("/login")
+            setLoading(false)
+        } catch (error:any) {
+            console.log("Sign Up failed : ",error.message)
+            toast.error(error.message)
+        }finally{
 
+        }
     }
 
     useEffect(()=>{
@@ -28,7 +41,7 @@ export default function () {
 
     return (
         <div className=" flex flex-col items-center justify-center min-h-screen py-2">
-            <h1>Signup</h1>
+            <h1>{loading? "Processing" : "Sign Up"}</h1>
             <hr />
             <label htmlFor="username">Username : </label>
             <input className="p-2 border-2 rounded-2xl" id="username" type="text" value={user.username} onChange={(e) => setUser({ ...user, username: e.target.value })} placeholder="Username....." />

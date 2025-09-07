@@ -4,7 +4,7 @@ import { NextRequest,NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { error } from "console";
 
-connect()
+await connect()
 
 export async function POST(request : NextRequest){
     try {
